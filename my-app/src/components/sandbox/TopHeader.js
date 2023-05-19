@@ -1,7 +1,7 @@
 import React from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Dropdown, Space } from "antd";
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import { Button, Layout, Dropdown, Space,Avatar } from "antd";
+import { DownOutlined, SmileOutlined,UserOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 
@@ -45,10 +45,10 @@ export default function TopHeader(props) {
           menu={{
             items,
           }}
-        >
+        > 
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              超级管理员
+            <Avatar size="large" icon={<UserOutlined />} />
               <DownOutlined />
             </Space>
           </a>
