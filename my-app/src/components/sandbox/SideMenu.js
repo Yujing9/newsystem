@@ -43,7 +43,7 @@ export default function SideMenu(props) {
 
   const location = useLocation();
   // console.log("/"+location.pathname.split("/")[1]); // 输出当前页面的路径名
-
+  const {role:{rights}} = JSON.parse(localStorage.getItem("token"))
   
   const selectKey = [location.pathname]
   const openKey = ["/"+location.pathname.split("/")[1]]
@@ -59,7 +59,8 @@ export default function SideMenu(props) {
   const navigate = useNavigate();
   
   const checkPermission = (item)=>{
-    return item.pagepermisson
+    // console.log(item)
+    return item.pagepermisson && rights.includes(item.key)
   }
 
   const renderMenu = (menuList) =>{

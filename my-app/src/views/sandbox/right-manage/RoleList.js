@@ -10,6 +10,7 @@ export default function RoleList() {
   const [rightList,setRightList] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentRight, setCurrentRight] = useState([]);//当前选中的权限
+  const [currentId, setCurrentId] = useState([]);//当前选中的权限
 
 
   useEffect(()=>{
@@ -51,11 +52,22 @@ export default function RoleList() {
       })  
   }
   // modal
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  
   const handleOk = () => {
     setIsModalOpen(false);
+    // 前端修改数据
+    setDataSource(dataSource.map((item)=>{
+      if(item.id === currentId){
+        return {...item,rights:currentRight}
+      }
+      return item
+    }))
+
+    // 修改数据，同步到数据库
+    axios.patch(`http://localhost:3001/roles/${currentId}`,{
+      rights:currentRight
+    })
+  
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -68,6 +80,7 @@ export default function RoleList() {
   const onCheck = (checkedKeys, info) => {
     console.log('onCheck', checkedKeys, info);  
     setCurrentRight(checkedKeys)
+    
   };
 
   
@@ -89,25 +102,31 @@ export default function RoleList() {
         <>
         <Button type="link" danger shape="circle" icon={<DeleteOutlined/>} onClick={()=>showConfirm(item)}> </Button>
 
-        <Button type="primary" shape="circle" icon={<BarsOutlined />} onClick={showModal}></Button>  
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Tree
-        checkable
-        defaultCheckedKeys={currentRight}
-        checkedKeys={currentRight}
-        onSelect={onSelect}
-        onCheck={onCheck}
-        treeData={rightList}
-        / >
-      </Modal>
+        <Button type="primary" shape="circle" icon={<BarsOutlined />} onClick={()=>{
+          setIsModalOpen(true);
+          setCurrentRight(item.rights)
+          setCurrentId(item.id)
+          }}></Button>  
         </>
+        
       )
     },
   ];
 
 
   return (
+    <div>
     <Table columns={columns} dataSource={dataSource} pagination={{
       pageSize: 4}} />
+      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Tree
+        checkable
+        checkedKeys={currentRight}
+        onSelect={onSelect}
+        onCheck={onCheck}
+        treeData={rightList}
+        / >
+      </Modal>
+      </div>
   )
 }

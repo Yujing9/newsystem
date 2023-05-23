@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Dropdown, Space,Avatar } from "antd";
 import { DownOutlined, SmileOutlined,UserOutlined } from "@ant-design/icons";
@@ -6,18 +7,30 @@ import { DownOutlined, SmileOutlined,UserOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export default function TopHeader(props) {
+  const navigate = useNavigate();
+  const {username,role:{roleName}} =  JSON.parse(localStorage.getItem('token'))
   const items = [
     {
       key: "1",
       label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          退出
-        </a>
+        <span>
+          {roleName}
+        </span>
       ),
+    },
+    {
+      key: "2",
+      label: (
+        <span>
+          退出
+        </span>
+      ),
+      onClick: () => {
+        navigate("/login");
+        localStorage.removeItem("token");
+        console.log("退出");
+        
+      }
     },
   ];
   return (
@@ -40,7 +53,7 @@ export default function TopHeader(props) {
         }}
       />
       <div style={{ float: "right" }}>
-        <span>欢迎admin回来</span>
+        <span>欢迎<span style={{color:"#1890ff"}}>{username}</span>回来</span>
         <Dropdown
           menu={{
             items,
