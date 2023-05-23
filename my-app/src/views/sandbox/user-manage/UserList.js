@@ -104,7 +104,7 @@ export default function UserList() {
   const addFormOk = () => {
     console.log("add")
     addFormRef.current.validateFields().then((values) => {
-      console.log(values);
+      // console.log(values);
       setIsAddModalOpen(false);
       addFormRef.current.resetFields()
         // 添加到后端

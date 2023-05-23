@@ -73,7 +73,7 @@ export default function RightList() {
 
     // 前端过滤数据，后端过滤数据
     const deleteItem = ()=>{
-      console.log(wholeItem)
+      // console.log(wholeItem)
       if(wholeItem.grade===1){
         setRightList(rightList.filter(item=>item.id !== wholeItem.id))
         axios.delete(`http://localhost:3001/rights/${wholeItem.id}`)
@@ -98,10 +98,10 @@ export default function RightList() {
 
     // todo ： 这段代码好像写的跟坨屎一样，有时间再优化。wholeitem为什么变化，然后同时可以rightlist也会改变。是传的引用吗？
     const onChange = (checked) => {
-      console.log(`switch to ${checked}`);
+      // console.log(`switch to ${checked}`);
       wholeItem.pagepermisson = checked?1:0
       setRightList([...rightList])
-      console.log(rightList)
+      // console.log(rightList)
       if(wholeItem.grade===1){
         axios.patch(`http://localhost:5000/rights/${wholeItem.id}`,{
             pagepermisson:wholeItem.pagepermisson

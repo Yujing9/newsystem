@@ -76,7 +76,7 @@ export default function SideMenu(props) {
         return getItem(item.title, item.key, iconList[item.key]);
       }
     });
-    console.log(newItems)
+    // console.log(newItems)
     return newItems;
   }
   

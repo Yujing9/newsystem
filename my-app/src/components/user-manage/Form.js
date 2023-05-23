@@ -21,7 +21,7 @@ const UserForm = forwardRef((props, ref) => {
   const {roleId,region} = JSON.parse(localStorage.getItem("token"))
 
   const onchange = (value) => {
-    console.log(value);
+    // console.log(value);
     if(value===1){
       setIsDisabled(true)
       

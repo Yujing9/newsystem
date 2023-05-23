@@ -11,7 +11,7 @@ export default function Login() {
     console.log('Success:', values);
     axios.get(`http://localhost:3001/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`)
     .then(res=>{
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data.length>0){
           message.success('登陆成功')
           localStorage.setItem("token",JSON.stringify(res.data[0]))
