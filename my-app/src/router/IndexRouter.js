@@ -16,6 +16,8 @@ import AuditList from '../views/sandbox/audit-manage/AuditList'
 import Unpublished from '../views/sandbox/publish-manage/Unpublished'
 import Published from '../views/sandbox/publish-manage/Published'
 import Sunset from '../views/sandbox/publish-manage/Sunset'
+import NewsPreview from '../views/sandbox/news-manage/NewsPreview'
+import NewsUpdate from '../views/sandbox/news-manage/NewsUpdate'
 
 export default function IndexRouter() {
 
@@ -36,15 +38,18 @@ export default function IndexRouter() {
     "/user-manage/list":<UserList />,
     "/right-manage/role/list":<RoleList />,
     "/right-manage/right/list":<RightList />,
+    "/news-manage/preview/:id":<NewsPreview />,
     "/news-manage/add":<NewsAdd />,
     "/news-manage/draft":<NewsDraft />,
     "/news-manage/category":<NewsCategory />,
+    "/news-manage/update/:id":<NewsUpdate />,
     "/audit-manage/audit":<Audit />,
     "/audit-manage/list":<AuditList />,
     "/publish-manage/unpublished":<Unpublished />,
     "/publish-manage/published":<Published />,
     "/publish-manage/sunset":<Sunset />
 }
+// localhost:3000/news-manage/update/12
 
   const {role:{rights}} = JSON.parse(localStorage.getItem("token"))
 
@@ -52,7 +57,9 @@ export default function IndexRouter() {
     return rights.includes(item.key)
   }
   const checkUserPermission = (item)=>{
-    return item.pagepermisson && LocalRouterMap[item.key]
+    // console.log(item.routepermisson)
+    // console.log(item.key)
+    return LocalRouterMap[item.key] && (item.pagepermisson || item.routepermisson)
   }
 
 
@@ -65,13 +72,14 @@ export default function IndexRouter() {
            : <Login />}>
           {BackRouteList.map(item=>{
             if(checkRoute(item) && checkUserPermission(item)){
-              return <Route key={item.key} path={item.key} element={LocalRouterMap[item.key]} exact />
+              // console.log(item.key)
+              return <Route key={item.key} path={item.key} element={LocalRouterMap[item.key]} />
             }
             return null
             }
             )} 
           <Route path="/" element={<Navigate to="/home" replace={true} />} />
-          <Route path="*" element={<><Navigate to="/nopermission" replace={true} /> <Nopermission /></>} />
+          {/* <Route path="*" element={<><Navigate to="/nopermission" replace={true} /> <Nopermission /></>} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

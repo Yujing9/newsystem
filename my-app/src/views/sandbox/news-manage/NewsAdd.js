@@ -1,18 +1,27 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {  Typography,Steps,Button, Form, Input,message,notification } from 'antd';
+import {  Typography,Steps,Button, Form, Input,message,notification,Select } from 'antd';
 import style from './News.module.css'
 import NewsEditor from '../../../components/news-manage/NewsEditor';
 import axios from "axios";
 const { Title } = Typography;
+const { Option } = Select;
 
 export default function NewsAdd() {
   const [current, setCurrent] = useState(0);
   const [formInfo, setFormInfo] = useState({});//{title:"",category:""
   const [content, setContent] = useState("")//<p>123</p>
+  const [categoryList, setCategoryList] = useState([])
   const NewsForm = useRef(null)
   const User = JSON.parse(localStorage.getItem("token"))
   const navigate = useNavigate()
+
+  useEffect(()=>{
+    axios.get("/categories").then(res=>{
+      setCategoryList(res.data)
+    })
+  },[])
+
 
   const handleNext = () => {
     if(current === 0){
@@ -114,7 +123,7 @@ export default function NewsAdd() {
       >
         <Form.Item
           label="新闻标题"
-          name="username"
+          name="title"
           rules={[
             {
               required: true,
@@ -122,12 +131,13 @@ export default function NewsAdd() {
             },
           ]}
         >
+
           <Input />
         </Form.Item>
 
         <Form.Item
           label="新闻分类"
-          name="password"
+          name="categoryId"
           rules={[
             {
               required: true,
@@ -135,7 +145,11 @@ export default function NewsAdd() {
             },
           ]}
         >
-          <Input />
+          <Select>
+          {categoryList.map(item=>(
+            <Option value={item.id} key={item.id}>{item.title}</Option>
+          ))}
+          </Select>
         </Form.Item>
       </Form>
       </div>
