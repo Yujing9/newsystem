@@ -53,6 +53,7 @@ export default function AuditList() {
         axios
           .patch(`/news/${item.id}`, {
             publishState: 2,
+            publishTime: Date.now(),
           })
           .then((res) => {
             setDataSource(dataSource.filter((data) => data.id !== item.id));
