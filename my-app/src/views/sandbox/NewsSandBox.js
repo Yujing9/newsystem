@@ -7,15 +7,14 @@ import './NewsSandBox.css'
 const {  Content } = Layout;
 
 export default function NewsSandBox() {
-  const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
     <Layout>
-      <SideMenu collapsed={collapsed}/>
+      <SideMenu />
       <Layout>
-        <TopHeader colorBgContainer={colorBgContainer} collapsed={collapsed} setCollapsed={setCollapsed}/>
+        <TopHeader colorBgContainer={colorBgContainer} />
         <Content
             style={{
               margin: '24px 16px',

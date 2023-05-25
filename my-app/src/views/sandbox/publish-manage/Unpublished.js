@@ -1,11 +1,17 @@
-import React from 'react'
-import UsePublish from '../../../components/publish-manage/UsePublish'
-
-
+import React from "react";
+import NewsPublish from "../../../components/publish-manage/NewsPublish";
+import usePublish from "../../../components/publish-manage/usePublish";
+import { Table, Button } from "antd";
 export default function Unpublished() {
-  const {username} = JSON.parse(localStorage.getItem("token"))
-
+  const { dataSource, handlePublish } = usePublish(1);
   return (
-    <UsePublish type={1} username={username} />
-  )
+    <NewsPublish
+      dataSource={dataSource}
+      button={(item) => (
+        <Button type="primary" onClick={() => handlePublish(item)}>
+          发布
+        </Button>
+      )}
+    />
+  );
 }

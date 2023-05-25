@@ -18,11 +18,13 @@ import Published from '../views/sandbox/publish-manage/Published'
 import Sunset from '../views/sandbox/publish-manage/Sunset'
 import NewsPreview from '../views/sandbox/news-manage/NewsPreview'
 import NewsUpdate from '../views/sandbox/news-manage/NewsUpdate'
+import { Spin } from 'antd';
 
 export default function IndexRouter() {
 
   const [BackRouteList, setBackRouteList] = useState([])
-    useEffect(()=>{
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(()=>{
         Promise.all([
             axios.get("http://localhost:3001/rights"),
             axios.get("http://localhost:3001/children"),
@@ -61,7 +63,10 @@ export default function IndexRouter() {
     // console.log(item.key)
     return LocalRouterMap[item.key] && (item.pagepermisson || item.routepermisson)
   }
-
+  // if (isLoading) {
+  //   // 如果正在加载，显示加载状态
+  //   return <Spin size="large" />;
+  // }
 
   return (
     <BrowserRouter>

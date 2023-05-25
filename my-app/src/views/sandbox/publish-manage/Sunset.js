@@ -1,10 +1,17 @@
-import React from 'react'
-import UsePublish from '../../../components/publish-manage/UsePublish'
-
+import React from "react";
+import NewsPublish from "../../../components/publish-manage/NewsPublish";
+import usePublish from "../../../components/publish-manage/usePublish";
+import { Table, Button } from "antd";
 export default function Sunset() {
-  const {username} = JSON.parse(localStorage.getItem("token"))
-
+  const { dataSource, handleDelete } = usePublish(3);
   return (
-    <UsePublish type={3} username={username} />
-  )
+    <NewsPublish
+      dataSource={dataSource}
+      button={(item) => (
+        <Button danger type="primary" onClick={() => handleDelete(item)}>
+          删除
+        </Button>
+      )}
+    />
+  );
 }

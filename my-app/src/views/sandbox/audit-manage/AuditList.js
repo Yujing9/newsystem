@@ -16,7 +16,6 @@ export default function AuditList() {
 
   const { username } = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
-  // 超级管理可以看到全部，其他人只能看到自己的
   useEffect(() => {
     axios
       .get(

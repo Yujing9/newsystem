@@ -7,7 +7,8 @@ import { Layout, Menu } from 'antd';
 import { useNavigate,useLocation } from 'react-router-dom';
 import './index.css'
 import axios from "axios";
-
+import {useDispatch,useSelector} from 'react-redux'
+import {changeCollapsed} from '../../redux/reducer/CollapsedReducer'
 const { Sider } = Layout;
 
 
@@ -23,7 +24,8 @@ function getItem(label, key, icon, children, type) {
 
 
 export default function SideMenu(props) {
-
+  const dispatch = useDispatch()
+  const isCollapsed = useSelector((state) => state.CollapsedReducer.value)
   const iconList = {
     "/home":<UserOutlined />,
     "/user-manage":<UserOutlined />,
@@ -79,10 +81,10 @@ export default function SideMenu(props) {
     // console.log(newItems)
     return newItems;
   }
-  
+  //collapsed
 
   return (
-    <Sider trigger={null} collapsible collapsed={props.collapsed}>
+    <Sider trigger={null} collapsible collapsed={isCollapsed}> 
         <div style={{display:"flex",height:"100%","flexDirection":"column"}}>
         <div className="logo" >后台管理系统</div>
         <div style={{flex:1,"overflow":"auto"}}>

@@ -1,13 +1,18 @@
-import React,{useEffect,useState,useRef} from 'react'
-import UsePublish from '../../../components/publish-manage/UsePublish'
-
+import React, { useEffect, useState, useRef } from "react";
+import NewsPublish from "../../../components/publish-manage/NewsPublish";
+import usePublish from "../../../components/publish-manage/usePublish";
+import { Table, Button } from "antd";
 export default function Published() {
-  const {username} = JSON.parse(localStorage.getItem("token"))
+  const { dataSource, handleSunset } = usePublish(2);
 
- return (
-   <>
-    <UsePublish type={2} username={username} />
-   </>
- )
+  return (
+    <NewsPublish
+      dataSource={dataSource}
+      button={(item) => (
+        <Button type="primary" onClick={() => handleSunset(item)}>
+          下线
+        </Button>
+      )}
+    />
+  );
 }
-
