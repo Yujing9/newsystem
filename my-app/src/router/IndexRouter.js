@@ -18,6 +18,8 @@ import Published from '../views/sandbox/publish-manage/Published'
 import Sunset from '../views/sandbox/publish-manage/Sunset'
 import NewsPreview from '../views/sandbox/news-manage/NewsPreview'
 import NewsUpdate from '../views/sandbox/news-manage/NewsUpdate'
+import News from '../views/news/News'
+import Details from '../views/news/Details'
 import { Spin } from 'antd';
 
 export default function IndexRouter() {
@@ -71,6 +73,8 @@ export default function IndexRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/news" element={<News />} />
+        <Route path="/details/:id" element={<Details />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={localStorage.getItem("token") ? 
           <NewsSandBox />
